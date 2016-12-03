@@ -72,7 +72,7 @@ class Board {
 	}
 }
 
-var board = new Board(4, 4, Math.floor(window.innerWidth / 8), Math.floor(window.innerHeight / 8));
+var board = new Board(10, 10, 25, 25);
 for (let i = 0; i < 100; i++) {
 	let r = Math.floor(Math.random() * board.board.length);
 	board.board[r].trigger(true);
