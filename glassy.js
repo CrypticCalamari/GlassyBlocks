@@ -3,12 +3,18 @@ var nextStateMap = new Map([
 	["off", "on"]
 ]);
 
+var stateScoreMap = new Map([
+	["on", 0],
+	["off", 0]
+]);
+
 class Cell {
-	constructor(x, y, w, h, state, id) {
+	constructor(x, y, w, h, state, id, board) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
+		this.board = board;
 		this.state = state;
 		this.town = [];
 		this.cell = document.createElement("div");
@@ -30,6 +36,7 @@ class Cell {
 			for (let x of this.town) {
 				x.trigger(false);
 			}
+			this.board.updateScore(this);
 		}
 
 		// temporary global reference
@@ -49,10 +56,11 @@ class Board {
 		this.rows = rows;
 		this.cols = cols;
 		this.board = [];
+		this.score = new Map();
 		
 		for (let i = 0; i < rows; i++) {
 			for (let j = 0; j < cols; j++) {
-				let cell = new Cell(j, i, w, h, "off", "cell_" + (j + i * cols));
+				let cell = new Cell(j, i, w, h, "off", "cell_" + (j + i * cols), this);
 				this.board.push(cell);
 			}
 		}
@@ -70,6 +78,26 @@ class Board {
 			}
 		}
 	}
+	updateScore(cell) {
+		if (cell.state == "on") {
+			this.score.set("on", this.score.get("on") + 1);
+			this.score.set("off", this.score.get("off") - 1);
+		} else {
+			this.score.set("on", this.score.get("on") - 1);
+			this.score.set("off", this.score.get("off") + 1);
+		}
+		for (c of cell.town) {
+			if (c.state == "on") {
+				this.score.set("on", this.score.get("on") + 1);
+				this.score.set("off", this.score.get("off") - 1);
+			} else {
+				this.score.set("on", this.score.get("on") - 1);
+				this.score.set("off", this.score.get("off") + 1);
+			}
+		}
+		document.getElementById("scoreOn").innerHTML = this.score.get("on");
+		document.getElementById("scoreOff").innerHTML = this.score.get("off");
+	}
 }
 
 var board = new Board(10, 10, 25, 25);
@@ -77,6 +105,16 @@ for (let i = 0; i < 100; i++) {
 	let r = Math.floor(Math.random() * board.board.length);
 	board.board[r].trigger(true);
 }
+
+class CanCell {
+
+}
+
+class CanBoard {
+	
+}
+
+
 
 
 
