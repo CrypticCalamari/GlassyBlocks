@@ -79,6 +79,7 @@ class Board {
 		}
 	}
 	updateScore(cell) {
+		console.log("test");
 		if (cell.state == "on") {
 			this.score.set("on", this.score.get("on") + 1);
 			this.score.set("off", this.score.get("off") - 1);
