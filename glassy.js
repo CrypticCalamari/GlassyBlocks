@@ -86,7 +86,7 @@ class Board {
 			this.score.set("on", this.score.get("on") - 1);
 			this.score.set("off", this.score.get("off") + 1);
 		}
-		for (c of cell.town) {
+		for (let c of cell.town) {
 			if (c.state == "on") {
 				this.score.set("on", this.score.get("on") + 1);
 				this.score.set("off", this.score.get("off") - 1);
