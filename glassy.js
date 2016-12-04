@@ -57,6 +57,8 @@ class Board {
 		this.cols = cols;
 		this.board = [];
 		this.score = new Map();
+		this.score.set("on", 0);
+		this.score.set("off", 0);
 		
 		for (let i = 0; i < rows; i++) {
 			for (let j = 0; j < cols; j++) {
