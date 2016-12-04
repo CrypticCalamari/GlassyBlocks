@@ -81,20 +81,12 @@ class Board {
 		}
 	}
 	updateScore(cell) {
-		console.log("test");
-		if (cell.state == "on") {
-			this.score.set("on", this.score.get("on") + 1);
-			this.score.set("off", this.score.get("off") - 1);
-		} else {
-			this.score.set("on", this.score.get("on") - 1);
-			this.score.set("off", this.score.get("off") + 1);
-		}
-		for (let c of cell.town) {
+		this.score.set("on", 0);
+		this.score.set("off", 0);
+		for (let c of this.board) {
 			if (c.state == "on") {
 				this.score.set("on", this.score.get("on") + 1);
-				this.score.set("off", this.score.get("off") - 1);
 			} else {
-				this.score.set("on", this.score.get("on") - 1);
 				this.score.set("off", this.score.get("off") + 1);
 			}
 		}
