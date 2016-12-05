@@ -1,15 +1,46 @@
-div {
-	position: absolute;
-	transition: 1s;
-	width: 25px;
-	height: 25px;
+/*
+Credit: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes
+Notes: Borrowing css without hesitation until I gain an intuition and understanding for how this stuff works.
+*/
+
+body {
+	background: #999999;
 }
-table#scoreBoard {
-	position: absolute;
-	width: 75px;
-	height: 50px;
-	top: 0px;
-	left: 0px;
+header {
+	display: block;
+	margin: 4px;
+	padding: 5px;
+	min-height: 100px;
+	border: 1px solid #eebb55;
+	border-radius: 7pt;
+	background: #ffeebb;
+}
+main {
+	min-height: 800px;
+	margin: 0px;
+	padding: 0px;
+	display: flex;
+	flex-flow: row;
+}
+main > #menu {
+	margin: 4px;
+	padding: 5px;
+	border: 1px solid #8888bb;
+	border-radius: 7pt;
+	background: #dddd88;
+	flex: 1 6 20%;
+	order: 1;
+}
+main > #game {
+	margin: 4px;
+	padding: 5px;
+	border: 1px solid #cccc33;
+	border-radius: 7pt;
+	background: #dddd88;
+	flex: 3 1 80%;
+	order: 2;
+}
+.cell {
 }
 .on {
 background-color: #ffcc00;
@@ -19,3 +50,19 @@ border-style: inset;
 	background-color: #000;
 	border-style: outset;
 }
+@media all and (max-width: 640px) {
+	main, #page {
+		flex-direction: column;
+	}
+	main > #menu, main > #game {
+		order: 0;
+	}
+	main > #menu, header {
+		min-height: 50px;
+		max-height: 50px;
+	}
+}
+
+
+
+

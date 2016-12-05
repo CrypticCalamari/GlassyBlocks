@@ -27,7 +27,7 @@ class Region {
 	}
 }
 class Board {
-	constructor (w, h, torus=false;) {
+	constructor (w, h, torus=false) {
 		this.w = w;
 		this.h = h;
 		this.torus = torus;
@@ -196,6 +196,26 @@ class CADivView {
 		
 	}
 }
+
+/*
+TODO: Order of Tasks
+===============================================================================
+() Finish CAGame (creates board and sets it up based on provided attributes)
+() Start and Finish LOGame class
+() Set up initial menu with callbacks for each game
+() Set up Game Menus specific to each game in the respective view class
+() Develop a modal menu system for views. Maybe use promises?
+*/
+
+
+
+
+
+
+
+
+
+
 
 
 
