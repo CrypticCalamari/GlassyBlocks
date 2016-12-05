@@ -6,7 +6,7 @@ Notes: Borrowing css without hesitation until I gain an intuition and understand
 body {
 	background: #999999;
 }
-header {
+header, footer {
 	display: block;
 	margin: 4px;
 	padding: 5px;
@@ -57,7 +57,7 @@ border-style: inset;
 	main > #menu, main > #game {
 		order: 0;
 	}
-	main > #menu, header {
+	main > #menu, header, footer {
 		min-height: 50px;
 		max-height: 50px;
 	}
