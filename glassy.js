@@ -19,7 +19,8 @@ class Cell {
 	}
 }
 class Region {
-	constructor (board) {
+	constructor (name, board) {
+		this.name = name;
 		this.board = board;
 		this.cells = new Set();
 		this.rules = new Map();
@@ -34,7 +35,7 @@ class Board {
 		this.border = (torus ? null : new Cell(-1, -1, State.ZERO));
 		this.cells = [];
 		this.regions = new Set();
-		this.start_region = new Region(this);
+		this.start_region = new Region("default", this);
 
 		this.regions.add(this.start_region);
 
@@ -60,7 +61,8 @@ class Board {
 	}
 }
 class Rule {
-	constructor (state) {
+	constructor (name, state) {
+		this.name = name;
 		this.curr_state = state;
 		this.next_states = new Map();
 	}
@@ -111,26 +113,31 @@ class KeyGen {
 		return s;
 	}
 }
-class CAController {
-	constructor (model, view, period) {
+class CAGame {
+	constructor (model, period) {
 		this.board = model;
 		this.running = false;
-		this.view = view;
+		this.view = null;
 		this.period = period;
 	}
 	start () {
-		this.running = true;
-		
-		this.CALoop = window.setInterval(() => {
-			if (this.running) {
-				this.step();
-				this.transition();
-				this.view.update(this.board);
-			}
-			else {
-				window.clearInterval(this.CALoop); // not sure if this line can see CALoop
-			}
-		}, this.period);
+		if (this.view) {
+			this.running = true;
+
+			this.CALoop = window.setInterval(() => {
+				if (this.running) {
+					this.step();
+					this.transition();
+					this.view.update(this.board);
+				}
+				else {
+					window.clearInterval(this.CALoop);
+				}
+			}, this.period);
+		}
+		else {
+			console.log("ERROR: View must be set before start()");
+		}
 	}
 	stop () {
 		this.running = false;
@@ -138,7 +145,7 @@ class CAController {
 	increment_period (increment) {
 		this.stop();
 		this.period += increment;	// TODO: verify increment
-		while (CALoop) {}					// This probably doesn't work does it?
+		while (this.CALoop) {}		// This probably doesn't work does it?
 		this.start()							// TODO: come back later and use promises to verify clearInterval was called before this starts again
 	}
 	step () {
@@ -160,7 +167,8 @@ class CAController {
 }
 
 class CACanvasView {
-	constructor (w, h) {
+	constructor (w, h, game) {
+		this.game = game;
 		this.canvas = document.createElement("canvas");
 		this.canvas.width = w;
 		this.canvas.height = h;
@@ -174,11 +182,12 @@ class CACanvasView {
 }
 
 class CADivView {
-	constructor (w, h) {
+	constructor (w, h, game) {
 		this.w = w;
 		this.h = h;
 		this.board = [];
 		this.table = document.createElement("table");
+		this.game = game;
 
 		for (let j = 0; j < h; j++) {
 			let tr = document.createElement("tr");
@@ -207,8 +216,59 @@ TODO: Order of Tasks
 () Develop a modal menu system for views. Maybe use promises?
 */
 
+var menu = document.getElementById("menu");
 
+// Main Menu
+var main_menu = document.createElement("div");
+var game_select_button = document.createElement("button");
+game_select_button.innerHTML = "Select Game"
+main_menu.appendChild(game_select_button);
+menu.appendChild(main_menu);
 
+// Game Selection Menu
+var game_select_menu = document.createElement("div");
+var CA_game_button = document.createElement("button");
+CA_game_button.innerHTML = "Cellular Automata";
+var LO_game_button = document.createElement("button");
+LO_game_button.innerHTML = "Glassy Blocks";
+game_select_menu.appendChild(CA_game_button);
+game_select_menu.appendChild(LO_game_button);
+
+// CA Game Menu
+var CA_game_menu = document.createElement("div");
+
+// LO Game Menu
+var LO_game_menu = document.createElement("div");
+
+// TODO: Flesh out cases
+function change_menu(button) {
+	switch (button) {
+		case "game_select":
+			menu.removeChild(menu.firstChild);
+			menu.appendChild(game_select_menu);
+			break;
+		case "CA_game":
+			menu.removeChild(menu.firstChild);
+			menu.appendChild(CA_game_menu);
+			break;
+		case "LO_game":
+			menu.removeChild(menu.firstChild);
+			menu.appendChild(LO_game_menu);
+			break;
+		default:
+			console.log("ERROR: Button pressed and you forgot to program case for it.");
+	}
+}
+
+game_select_button.addEventListener("click", (e) => {
+	change_menu("game_select");
+});
+CA_game_button.addEventListener("click", (e) => {
+	change_menu("CA_game");
+});
+LO_game_button.addEventListener("click", (e) => {
+	change_menu("LO_game");
+});
 
 
 
