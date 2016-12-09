@@ -5,7 +5,7 @@ class Rule {
 	}
 }
 
-class NewRuleModal {
+class RuleModal {
 	constructor (id, states, cancel_action, save_action) {
 		this.states = states;
 
@@ -46,6 +46,10 @@ class NewRuleModal {
 		});
 		this.form.addEventListener("submit", (e) => {
 			e.preventDefault();
+			if (isNaN(this.key.value)) {
+				console.log("VALIDATION ERROR: Key is not a number");
+				return;
+			}
 			save_action(this);
 		});
 
@@ -77,7 +81,7 @@ class NewRuleModal {
 	}
 }
 
-var test = new NewRuleModal("test", [{name:"test 1"},{name:"blargh"},{name:"garble"}]);
+var test = new RuleModal("test", [{name:"test 1"},{name:"blargh"},{name:"garble"}]);
 test.show();
 
 /*
