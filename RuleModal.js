@@ -6,8 +6,9 @@ class Rule {
 }
 
 class RuleModal {
-	constructor (id, states, cancel_action, save_action) {
+	constructor (id, states, parent, cancel_action, save_action) {
 		this.states = states;
+		this.parent = parent;
 
 		this.form						= document.createElement("form");
 		this.input_fields		= document.createElement("fieldset");
@@ -73,15 +74,15 @@ class RuleModal {
 		this.form.appendChild(this.button_fields);
 	}
 	show () {
-		document.body.appendChild(this.form);
+		this.parent.appendChild(this.form);
 		this.key.focus();
 	}
 	hide () {
-		document.body.removeChild(this.form);
+		this.parent.removeChild(this.form);
 	}
 }
 
-var test = new RuleModal("test", [{name:"test 1"},{name:"blargh"},{name:"garble"}]);
+var test = new RuleModal("test", [{name:"test 1"},{name:"blargh"},{name:"garble"}], document.body);
 test.show();
 
 /*

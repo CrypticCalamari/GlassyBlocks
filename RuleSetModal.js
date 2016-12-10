@@ -7,8 +7,9 @@ class RuleSet {
 }
 
 class RuleSetModal {
-	constructor (id, states, cancel_action, save_action) {
+	constructor (id, states, parent, cancel_action, save_action) {
 		this.states = states;
+		this.parent = parent;
 
 		this.form		= document.createElement("form");
 
@@ -117,15 +118,15 @@ class RuleSetModal {
 		r.removeChild(r.options[ r.selectedIndex ]);
 	}
 	show () {
-		document.body.appendChild(this.form);
+		this.parent.appendChild(this.form);
 		this.name.focus();
 	}
 	hide () {
-		document.body.removeChild(this.form);
+		this.parent.removeChild(this.form);
 	}
 }
 
-var test = new RuleSetModal("test", [{name:"test 1"},{name:"blargh"},{name:"garble"}]);
+var test = new RuleSetModal("test", [{name:"test 1"},{name:"blargh"},{name:"garble"}], document.body);
 test.show();
 
 /*
